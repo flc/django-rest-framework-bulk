@@ -4,6 +4,8 @@ import inspect
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ListSerializer
 
+from django.utils.translation import ugettext_lazy as _
+
 
 __all__ = [
     'BulkListSerializer',
@@ -45,7 +47,9 @@ class BulkListSerializer(ListSerializer):
 
         if not all((bool(i) and not inspect.isclass(i)
                     for i in all_validated_data_by_id.keys())):
-            raise ValidationError('')
+            raise ValidationError(
+                _("The '%s' field is missing from the data.") % id_attr
+                )
 
         # since this method is given a queryset which can have many
         # model instances, first find all objects to update
@@ -55,7 +59,12 @@ class BulkListSerializer(ListSerializer):
         })
 
         if len(all_validated_data_by_id) != objects_to_update.count():
-            raise ValidationError('Could not find all objects to update.')
+            raise ValidationError(_(
+                "Could not find all objects to update. Make sure the values in "
+                "the '%s' field refer to valid/existing objects.") % id_attr
+                )
+
+        self.validate_bulk_update(objects_to_update)
 
         updated_objects = []
 
@@ -68,3 +77,9 @@ class BulkListSerializer(ListSerializer):
             updated_objects.append(self.child.update(obj, obj_validated_data))
 
         return updated_objects
+
+    def validate_bulk_update(self, objects):
+        """
+        Hook to ensure that the bulk update should be allowed.
+        """
+        pass
