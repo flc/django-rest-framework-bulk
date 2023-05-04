@@ -1,4 +1,3 @@
-from __future__ import unicode_literals, print_function
 import json
 
 from django.core.urlresolvers import reverse
@@ -12,7 +11,7 @@ from .simple_app.views import FilteredBulkAPIView, SimpleBulkAPIView
 
 class TestBulkAPIView(TestCase):
     def setUp(self):
-        super(TestBulkAPIView, self).setUp()
+        super().setUp()
         self.view = SimpleBulkAPIView.as_view()
         self.request = RequestFactory()
 
@@ -166,7 +165,7 @@ class TestBulkAPIViewSet(TestCase):
     """
 
     def setUp(self):
-        super(TestBulkAPIViewSet, self).setUp()
+        super().setUp()
         self.url = reverse('api:simple-list')
 
     def test_get_single(self):

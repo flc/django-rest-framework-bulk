@@ -1,4 +1,3 @@
-from __future__ import print_function, unicode_literals
 from rest_framework import status
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.response import Response
@@ -26,7 +25,7 @@ class BulkCreateModelMixin(CreateModelMixin):
         bulk = isinstance(request.data, list)
 
         if not bulk:
-            return super(BulkCreateModelMixin, self).create(request, *args, **kwargs)
+            return super().create(request, *args, **kwargs)
 
         else:
             serializer = self.get_serializer(data=request.data, many=True)
@@ -38,7 +37,7 @@ class BulkCreateModelMixin(CreateModelMixin):
         return self.perform_create(serializer)
 
 
-class BulkUpdateModelMixin(object):
+class BulkUpdateModelMixin:
     """
     Update model instances in bulk by using the Serializers
     ``many=True`` ability from Django REST >= 2.2.5.
@@ -48,7 +47,7 @@ class BulkUpdateModelMixin(object):
         lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
 
         if lookup_url_kwarg in self.kwargs:
-            return super(BulkUpdateModelMixin, self).get_object()
+            return super().get_object()
 
         # If the lookup_url_kwarg is not present
         # get_object() is most likely called as part of options()
@@ -85,7 +84,7 @@ class BulkUpdateModelMixin(object):
         return self.perform_update(serializer)
 
 
-class BulkDestroyModelMixin(object):
+class BulkDestroyModelMixin:
     """
     Destroy model instances.
     """

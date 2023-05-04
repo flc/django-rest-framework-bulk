@@ -1,15 +1,12 @@
-from __future__ import print_function, unicode_literals
-
-
 __all__ = [
     'BulkListSerializer',
     'BulkSerializerMixin',
 ]
 
 
-class BulkSerializerMixin(object):
+class BulkSerializerMixin:
     pass
 
 
-class BulkListSerializer(object):
+class BulkListSerializer:
     pass

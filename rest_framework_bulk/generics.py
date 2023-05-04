@@ -1,4 +1,3 @@
-from __future__ import unicode_literals, print_function
 from rest_framework import mixins
 from rest_framework.generics import GenericAPIView
 from rest_framework.viewsets import ModelViewSet

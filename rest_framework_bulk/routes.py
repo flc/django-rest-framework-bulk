@@ -1,4 +1,3 @@
-from __future__ import unicode_literals, print_function
 import copy
 
 from rest_framework.routers import DefaultRouter, SimpleRouter
@@ -10,7 +9,7 @@ __all__ = [
 ]
 
 
-class BulkRouterMixin(object):
+class BulkRouterMixin:
     """
     Map http methods to actions defined on the bulk mixins.
     """

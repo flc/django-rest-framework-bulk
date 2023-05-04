@@ -1,11 +1,10 @@
-from __future__ import unicode_literals, print_function
 from rest_framework_bulk import generics
 
 from .models import SimpleModel
 from .serializers import SimpleSerializer
 
 
-class SimpleMixin(object):
+class SimpleMixin:
     model = SimpleModel
     queryset = SimpleModel.objects.all()
     serializer_class = SimpleSerializer

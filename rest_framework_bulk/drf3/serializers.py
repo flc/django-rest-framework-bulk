@@ -1,4 +1,3 @@
-from __future__ import print_function, unicode_literals
 import inspect
 
 from rest_framework.exceptions import ValidationError
@@ -13,9 +12,9 @@ __all__ = [
 ]
 
 
-class BulkSerializerMixin(object):
+class BulkSerializerMixin:
     def to_internal_value(self, data):
-        ret = super(BulkSerializerMixin, self).to_internal_value(data)
+        ret = super().to_internal_value(data)
 
         id_attr = getattr(self.Meta, 'update_lookup_field', 'id')
         request_method = getattr(getattr(self.context.get('view'), 'request'), 'method', '')
@@ -45,8 +44,8 @@ class BulkListSerializer(ListSerializer):
             for i in all_validated_data
         }
 
-        if not all((bool(i) and not inspect.isclass(i)
-                    for i in all_validated_data_by_id.keys())):
+        if not all(bool(i) and not inspect.isclass(i)
+                    for i in all_validated_data_by_id.keys()):
             raise ValidationError(
                 _("The '%s' field is missing from the data.") % id_attr
                 )
@@ -55,7 +54,7 @@ class BulkListSerializer(ListSerializer):
         # model instances, first find all objects to update
         # and only then update the models
         objects_to_update = queryset.filter(**{
-            '{}__in'.format(id_attr): all_validated_data_by_id.keys(),
+            f'{id_attr}__in': all_validated_data_by_id.keys(),
         })
 
         if len(all_validated_data_by_id) != objects_to_update.count():
