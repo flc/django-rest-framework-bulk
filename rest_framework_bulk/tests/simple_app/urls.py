@@ -1,4 +1,5 @@
-from django.conf.urls import patterns, url, include
+from django.urls import include, path
+from django.conf.urls import patterns
 from rest_framework_bulk.routes import BulkRouter
 
 from .views import SimpleViewSet
@@ -10,5 +11,5 @@ router.register('simple', SimpleViewSet, 'simple')
 urlpatterns = patterns(
     '',
 
-    url(r'^api/', include(router.urls, namespace='api')),
+    path('api/', include(router.urls, namespace='api')),
 )
